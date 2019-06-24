@@ -24,7 +24,16 @@ import sublime_plugin
 
 PLUGIN_NAME = "Pandoc"
 
+settings = sublime.load_settings("%s.sublime-settings".format(PLUGIN_NAME))
+
 
 class PandocCommand(sublime_plugin.TextCommand):
-    def run(self, edit):
+    def run(self, edit, *args, **kwargs):
         self.view.insert(edit, 0, "Hello, World!")
+
+
+class PandocToPdfCommand(sublime_plugin.WindowCommand):
+    def run(self, *args, **kwargs):
+        print(dir(self))
+        print(dir(self.window))
+        print(dir(self.window.active_view()))

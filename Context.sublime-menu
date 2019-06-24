@@ -7,11 +7,6 @@
                 "command": "pandoc_to_pdf",
                 // "args": {},
             },
-            {
-                "caption": "HTML",
-                "command": "pandoc",
-                "args": {},
-            },
         ]
     }
 ]

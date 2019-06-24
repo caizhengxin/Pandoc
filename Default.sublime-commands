@@ -1,0 +1,7 @@
+[
+    {
+        "caption": "Pandoc: PDF",
+        "command": "pandoc_to_pdf",
+        "args": {},
+    }
+]
