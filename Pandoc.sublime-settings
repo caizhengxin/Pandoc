@@ -1,0 +1,11 @@
+{
+
+    "output_fmt": "pdf",
+
+    // pdflatex, xelatex, lualatex, pdfroff
+    // wkhtml2pdf, prince, weasyprint, ...
+    "latex_engine": "xelatex",
+
+    // 字体
+    "mainfont": "Noto Sans CJK JP",
+}
