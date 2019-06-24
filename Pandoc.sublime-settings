@@ -1,6 +1,6 @@
 {
 
-    "output_fmt": "pdf",
+    "output_suffix": ".pdf",
 
     // pdflatex, xelatex, lualatex, pdfroff
     // wkhtml2pdf, prince, weasyprint, ...

@@ -24,16 +24,52 @@ import sublime_plugin
 
 PLUGIN_NAME = "Pandoc"
 
-settings = sublime.load_settings("%s.sublime-settings".format(PLUGIN_NAME))
+settings = sublime.load_settings("%s.sublime-settings" % PLUGIN_NAME)
+output_suffix = settings.get("output_suffix", ".pdf")
+latex_engine = settings.get("latex_engine", "xelatex")
+mainfont = settings.get("mainfont", "Noto Sans CJK JP")
+
+
+def View():
+    """
+    Get current active window view
+    """
+
+    return Window().active_view()
+
+
+def Window():
+    """"""
+
+    return sublime.active_window()
 
 
 class PandocCommand(sublime_plugin.TextCommand):
     def run(self, edit, *args, **kwargs):
-        self.view.insert(edit, 0, "Hello, World!")
+        spath = self.view.file_name()
+
+        path, suffix = os.path.splitext(spath)
+
+        print(output_suffix)
+
+        opath = "{}{}".format(path, output_suffix)
+
+        cmd = "pandoc {} -o {} --latex-engine={} -V mainfont='{}'".format(
+            spath,
+            opath,
+            latex_engine,
+            mainfont,
+        )
+
+        os.system(cmd)
 
 
 class PandocToPdfCommand(sublime_plugin.WindowCommand):
     def run(self, *args, **kwargs):
         print(dir(self))
         print(dir(self.window))
-        print(dir(self.window.active_view()))
+        # print(dir(self.window.active_view()))
+        print(self.name())
+        print(self.window.project_file_name())
+        print(View().file_name())
+        self.window.show_input_panel("File", View().file_name(), None, None, None)
