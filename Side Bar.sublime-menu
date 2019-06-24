@@ -5,12 +5,16 @@
             {
                 "caption": "PDF",
                 "command": "pandoc_to_pdf",
-                // "args": {},
+                "args": {
+                    "paths": [],
+                },
             },
             {
                 "caption": "HTML",
                 "command": "pandoc",
-                "args": {},
+                "args": {
+                    "paths": [],
+                },
             },
         ]
     }

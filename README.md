@@ -9,3 +9,7 @@ sudo apt install texlive texlive-xetex latex-cjk-all texmaker
 ```
 
 ## Demo
+
+```
+alt + p: 当前目录生成pdf
+```

@@ -45,7 +45,7 @@ def Window():
 
 
 class PandocCommand(sublime_plugin.TextCommand):
-    def run(self, edit, *args, **kwargs):
+    def run(self, edit, paths=[], *args, **kwargs):
         spath = self.view.file_name()
 
         path, suffix = os.path.splitext(spath)
@@ -59,17 +59,9 @@ class PandocCommand(sublime_plugin.TextCommand):
             mainfont,
         )
 
-        print(cmd)
-
         os.system(cmd)
 
 
 class PandocToPdfCommand(sublime_plugin.WindowCommand):
-    def run(self, *args, **kwargs):
-        print(dir(self))
-        print(dir(self.window))
-        # print(dir(self.window.active_view()))
-        print(self.name())
-        print(self.window.project_file_name())
-        print(View().file_name())
-        self.window.show_input_panel("File", View().file_name(), None, None, None)
+    def run(self, paths=[], *args, **kwargs):
+        print(paths)

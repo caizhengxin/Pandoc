@@ -5,7 +5,9 @@
             {
                 "caption": "PDF",
                 "command": "pandoc_to_pdf",
-                // "args": {},
+                "args": {
+                    "paths": [],
+                },
             },
         ]
     }

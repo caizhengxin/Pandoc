@@ -3,6 +3,7 @@
         "keys": ["alt+p"],
         "command": "pandoc",
         "args":{
+            "paths": [],
         },
     },
 ]
