@@ -1,6 +1,6 @@
 [
     {
-        "keys": ["ctrl+alt+p"],
+        "keys": ["alt+p"],
         "command": "pandoc",
         "args":{
         },

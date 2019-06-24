@@ -24,7 +24,7 @@ import sublime_plugin
 
 PLUGIN_NAME = "Pandoc"
 
-settings = sublime.load_settings("%s.sublime-settings" % PLUGIN_NAME)
+settings = sublime.load_settings("Pandoc.sublime-settings")
 output_suffix = settings.get("output_suffix", ".pdf")
 latex_engine = settings.get("latex_engine", "xelatex")
 mainfont = settings.get("mainfont", "Noto Sans CJK JP")
@@ -50,8 +50,6 @@ class PandocCommand(sublime_plugin.TextCommand):
 
         path, suffix = os.path.splitext(spath)
 
-        print(output_suffix)
-
         opath = "{}{}".format(path, output_suffix)
 
         cmd = "pandoc {} -o {} --latex-engine={} -V mainfont='{}'".format(
@@ -60,6 +58,8 @@ class PandocCommand(sublime_plugin.TextCommand):
             latex_engine,
             mainfont,
         )
+
+        print(cmd)
 
         os.system(cmd)
 
