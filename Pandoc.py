@@ -76,7 +76,7 @@ def pandocs(path, input_suffix, output_suffix=None):
     if os.path.isfile(path):
         pandoc(path, output_suffix)
     else:
-        for path in glob.glob("{}/{}".format(path, input_suffix)):
+        for path in glob.glob("{}/*{}".format(path, input_suffix)):
             pandoc(path, output_suffix)
 
 
