@@ -1,33 +1,23 @@
 import os
+import glob
 
 import sublime
 import sublime_plugin
 
-
-# PDF_BASE_PATH = "/home/jankincai/bolean/pdf/pro_comment/"
-# MD_BASE_PATH = "/home/jankincai/bolean/docs/pro_comment/"
-
-
-# def run_pandoc():
-
-#     for directory, dirs, files in os.walk(MD_BASE_PATH):
-#         for file in files:
-#             if ".md" in file:
-#                 path = os.path.join(directory, file)
-
-#                 pdf = file.replace(".md", ".pdf")
-
-#                 cmd = f'pandoc {path} -o {PDF_BASE_PATH}{pdf} --latex-engine=xelatex -V mainfont="Noto Sans CJK JP"'
-
-#                 print(cmd)
-#                 os.system(cmd)
-
 PLUGIN_NAME = "Pandoc"
 
-settings = sublime.load_settings("Pandoc.sublime-settings")
-output_suffix = settings.get("output_suffix", ".pdf")
-latex_engine = settings.get("latex_engine", "xelatex")
-mainfont = settings.get("mainfont", "Noto Sans CJK JP")
+
+# output_suffix = settings.get("output_suffix", ".pdf")
+# latex_engine = settings.get("latex_engine", "xelatex")
+# mainfont = settings.get("mainfont", "Noto Sans CJK JP")
+
+
+def Settings():
+    """
+    动态获取配置文件
+    """
+
+    return sublime.load_settings("Pandoc.sublime-settings")
 
 
 def View():
@@ -39,29 +29,85 @@ def View():
 
 
 def Window():
-    """"""
+    """
+    Window
+    """
 
     return sublime.active_window()
 
 
+def pandoc(spath, output_suffix=None):
+    """
+    转换函数
+
+    :param spath: 原文件路径
+    """
+
+    settings = Settings()
+
+    output_suffix = output_suffix or settings.get("output_suffix", ".pdf")
+    latex_engine = settings.get("latex_engine", "xelatex")
+    mainfont = settings.get("mainfont", "Noto Sans CJK JP")
+
+    path, suffix = os.path.splitext(spath)
+    opath = "{}{}".format(path, output_suffix)
+
+    cmd = "pandoc {} -o {} --latex-engine={} -V mainfont='{}'".format(
+        spath,
+        opath,
+        latex_engine,
+        mainfont,
+    )
+
+    os.system(cmd)
+
+    return cmd
+
+
+def pandocs(path, input_suffix, output_suffix=None):
+    """
+    转换函数
+
+    :param path: 文件路径
+    :param input_suffix: 输入文件后缀格式
+    :param output_suffix: 输出文件后缀格式
+    """
+
+    if os.path.isfile(path):
+        pandoc(path, output_suffix)
+    else:
+        for path in glob.glob("{}/{}".format(path, input_suffix)):
+            pandoc(path, output_suffix)
+
+
 class PandocCommand(sublime_plugin.TextCommand):
+    """
+    PandocCommand
+    """
+
     def run(self, edit, paths=[], *args, **kwargs):
+        """
+        """
+
         spath = self.view.file_name()
-
-        path, suffix = os.path.splitext(spath)
-
-        opath = "{}{}".format(path, output_suffix)
-
-        cmd = "pandoc {} -o {} --latex-engine={} -V mainfont='{}'".format(
-            spath,
-            opath,
-            latex_engine,
-            mainfont,
-        )
-
-        os.system(cmd)
+        pandoc(spath)
 
 
 class PandocToPdfCommand(sublime_plugin.WindowCommand):
+    """
+    Pandoc to PDF
+    """
+
     def run(self, paths=[], *args, **kwargs):
-        print(paths)
+
+        pandocs(paths and paths[0], ".md", ".pdf")
+
+
+class PandocToHtmlCommand(sublime_plugin.WindowCommand):
+    """
+    Pandoc to PDF
+    """
+
+    def run(self, paths=[], *args, **kwargs):
+
+        pandocs(paths and paths[0], ".md", ".html")

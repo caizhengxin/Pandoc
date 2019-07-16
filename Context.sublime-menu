@@ -9,6 +9,13 @@
                     "paths": [],
                 },
             },
+            {
+                "caption": "HTML",
+                "command": "pandoc_to_html",
+                "args": {
+                    "paths": [],
+                },
+            },
         ]
     }
 ]

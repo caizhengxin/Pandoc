@@ -5,5 +5,12 @@
         "args": {
             "paths": [],
         },
+    },
+    {
+        "caption": "Pandoc: HTML",
+        "command": "pandoc_to_html",
+        "args": {
+            "paths": [],
+        },
     }
 ]
