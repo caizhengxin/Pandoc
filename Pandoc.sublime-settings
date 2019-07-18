@@ -1,5 +1,7 @@
 {
 
+    "command": "",
+
     "output_suffix": ".pdf",
 
     // pdflatex, xelatex, lualatex, pdfroff

@@ -48,11 +48,13 @@ def pandoc(spath, output_suffix=None):
     output_suffix = output_suffix or settings.get("output_suffix", ".pdf")
     latex_engine = settings.get("latex_engine", "xelatex")
     mainfont = settings.get("mainfont", "Noto Sans CJK JP")
+    command = settings.get("command") or "pandoc"
 
     path, suffix = os.path.splitext(spath)
     opath = "{}{}".format(path, output_suffix)
 
-    cmd = "pandoc {} -o {} --latex-engine={} -V mainfont='{}'".format(
+    cmd = "{} {} -o {} --latex-engine={} -V mainfont='{}'".format(
+        command,
         spath,
         opath,
         latex_engine,
